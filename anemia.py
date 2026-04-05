@@ -655,7 +655,7 @@ elif page == "Model Comparison":
     st.plotly_chart(fig, use_container_width=True)
 
     # ---------------- INSIGHTS ----------------
-    st.subheader("🧠 Key Insights")
+    st.subheader("Key Insights")
 
     st.markdown(f"""
     • Models with Hemoglobin achieve near-perfect performance due to direct diagnostic dependency  
@@ -670,57 +670,52 @@ elif page == "Model Comparison":
     """)
 
     # ---------------- DYNAMIC TESTING ----------------
-    st.subheader("🔍 Live Model Prediction Comparison")
-
-    st.info("Compare predictions from trained models for the same patient input.")
+    st.subheader("Final Prediction Result")
 
     if "latest_X" in st.session_state:
         X_df = st.session_state['latest_X']
         st.write("Patient Input:", X_df)
 
-        results = []
+        model_path = "adaboost_with_hgb.pkl"
 
-        model_files = {
-            "AdaBoost (Final)": "adaboost_with_hgb.pkl",
-            "Random Forest": "random_forest_with_hgb.pkl",
-            "SVM": "svm_with_hgb.pkl",
-            "Naive Bayes": "naive_bayes_with_hgb.pkl",
-            "XGBoost": "xgboost_with_hgb.pkl"
-        }
+        if os.path.exists(model_path):
+            try:
+                with open(model_path, "rb") as f:
+                    model = pickle.load(f)
 
-        for name, path in model_files.items():
-            if os.path.exists(path):
-                try:
-                    with open(path, "rb") as f:
-                        temp_model = pickle.load(f)
+                pred = model.predict(X_df)[0]
 
-                    pred = temp_model.predict(X_df)[0]
+                if hasattr(model, "predict_proba"):
+                    proba = model.predict_proba(X_df)[0]
+                    confidence = proba[pred]
+                else:
+                    confidence = None
 
-                    if hasattr(temp_model, "predict_proba"):
-                        proba = temp_model.predict_proba(X_df)[0]
-                        confidence = proba[pred]   # ✅ FIXED
-                    else:
-                        confidence = None
+                label = "Anemic" if pred == 1 else "Non-Anemic"
+                prob_text = f"{confidence*100:.2f}%" if confidence is not None else "N/A"
 
-                    label = "Anemic" if pred == 1 else "Non-Anemic"
-                    prob_text = f"{confidence*100:.2f}%" if confidence is not None else "N/A"
+                # ✅ FINAL CLEAN TABLE
+                result_df = pd.DataFrame([{
+                    "Model": "AdaBoost (Final Model)",
+                    "Prediction": label,
+                    "Confidence": prob_text
+                }])
 
-                    results.append({
-                        "Model": name,
-                        "Prediction": label,
-                        "Confidence": prob_text
-                    })
+                st.table(result_df)
 
-                except:
-                    continue
+                # ✅ SAFE EXPLANATION
+                st.info("Final prediction is generated using the selected best-performing model (AdaBoost) based on overall evaluation, stability, and real-world applicability.")
 
-        if results:
-            st.dataframe(pd.DataFrame(results), use_container_width=True)
+            except Exception as e:
+                st.error("Error loading model")
+
         else:
-            st.warning("No models available.")
+            st.warning("Final model not found.")
 
     else:
         st.warning("Run a prediction first in Patient Screening tab.")
+
+
 # ---------------- ANALYTICS DASHBOARD ----------------
 elif page == "Analytics Dashboard":
     st.header("📉 Analytics Dashboard")
