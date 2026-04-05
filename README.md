@@ -1,63 +1,248 @@
-# Anemia Detection with Machine Learning
----
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clang) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/maladeep/anemia-detection-with-machine-learning)  ![GitHub](https://img.shields.io/github/license/maladeep/anemia-detection-with-machine-learning)
-----
-# Overview
-This repo consist of python machine learning code for the detection of the anemi using the data from Kaggle, provided by the username Biswa Ranjan Rao, and the direct URL to the dataset is https://www.kaggle.com/datasets/biswaranjanrao/anemia-dataset.
+# 🩸 AnemiaCare AI: Intelligent Anemia Detection System
 
-The dataset consists of 1421 samples with six attributes: gender, hemoglobin, mean corpuscular hemoglobin (MCH), mean corpuscular hemoglobin concentration (MCHC), mean corpuscular volume (MCV), and result.
+## 📌 Overview
 
-The result attribute(class), represented by the binary values 0 for non-anemic and 1 for anemic in the data set, was selected as the response variable. The gender attribute being binary, all other attributes were continuous variables, and the memory size consumed by the dataset was 66.7 MB.
+This project presents a machine learning-based system for detecting anemia using Complete Blood Count (CBC) data. Unlike traditional diagnosis methods that rely mainly on Hemoglobin (Hb), this system utilizes multiple hematological parameters to improve prediction accuracy and reliability.
+
+The system integrates data preprocessing, model training, evaluation, and deployment into an interactive Streamlit web application that provides real-time predictions, risk analysis, and downloadable reports.
 
 ---
 
-## Introduction to Anemia
-Anemia is a medical condition characterized by a deficiency of healthy red blood cells in the body or a reduction in the amount of hemoglobin in the blood. Hemoglobin is the protein in red blood cells responsible for carrying oxygen throughout the body. Anemia can occur due to various reasons such as a lack of iron or other essential nutrients, chronic diseases, genetic conditions, blood loss, or a malfunction in the bone marrow.
+## 🎯 Objectives
 
-Symptoms of anemia include fatigue, weakness, shortness of breath, dizziness, pale skin, irregular heartbeat, and headaches. Treatment for anemia depends on the underlying cause, but it may involve dietary changes, supplements, medication, or, in severe cases, blood transfusions.
+* Develop a predictive model for anemia diagnosis using supervised learning
+* Analyze multiple CBC parameters beyond Hemoglobin
+* Provide probability-based risk scoring and confidence levels
+* Compare multiple machine learning models
+* Build an interactive and user-friendly screening system
 
-It is important to identify and treat anemia promptly, as it can lead to complications such as heart problems, impaired cognitive function, and delayed growth and development in children.
+---
+
+## ⚠️ Problem Statement
+
+Traditional anemia diagnosis often depends heavily on Hemoglobin levels, which may not capture complex relationships between various blood parameters.
+
+This project aims to:
+
+* Use multiple CBC features
+* Provide early and reliable screening
+* Enhance decision-making using machine learning
 
 ---
 
-## What's Inside
-1. Exploratory Data Analysis
-2. Statistical test with t-test, Odd ratio, and Chi-square test for association
-3. Feature Selection
-   * Correlation
-   * SelectKBest 
-   * Extra Tree Classifier
-4. Scaling feature
-   * log 
-   * Standardization
-   * Normalization
-5. Class imbalance handling
-   *  Random Undersampling
-   *  Random Oversampling
-   *  SMOTE
-   *  ADASYN
-6. Data Leakage handling
-7. Algorithms employed
-   * Decision Tree (DT)
-   * Random Forest (RF)
-   * Logistic Regression (LG)
-   * K-Nearest Neighbors (KNN)
-   * Support Vector Machine (SVM)
-   * Gaussian Naive Bayes (NB)
-8. Performance measured
-   * Accuracy
-   * Area Under the Curve
-   * Precision
-   * Recall
-   * F1 Score
-   * Kappa Stat
-9. Hyperparameter tuning with GridsearchCV
-10. 5 fold cross validation
+## 🔬 Dataset Description
+
+* Records: ~15,000+ samples
+* Features: 12 attributes
+
+### Key Attributes:
+
+* Age
+* Gender
+* Hemoglobin (Hb)
+* RBC (Red Blood Cells)
+* PCV (Packed Cell Volume)
+* MCV, MCH, MCHC
+* RDW (Red Cell Distribution Width)
+* WBC / TLC
+* Platelet Count
+* Target (Anemic / Non-Anemic)
 
 ---
-## Usages
-[Run Live App](https://anemia-detection-with-machine-learning-b7llxt4qca.streamlit.app)
 
-## Contributing
+## ⚙️ System Workflow
 
-Contributions are what makes the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+User Input (CBC Values)
+→ Data Preprocessing
+→ ML Model Prediction
+→ Anemia Classification
+→ Risk Score & Confidence
+→ Visualization Dashboard
+→ PDF Report Generation
+
+---
+
+## 🧰 Technology Stack
+
+### 🖥️ Core
+
+* Python
+* Streamlit
+
+### 📊 Data Processing
+
+* Pandas
+* NumPy
+
+### 🤖 Machine Learning
+
+* Scikit-learn
+* XGBoost
+
+### 📈 Visualization
+
+* Plotly
+
+### 📄 Reporting
+
+* FPDF
+
+### 💾 Storage
+
+* Pickle
+
+---
+
+## 🤖 Models Implemented
+
+* Random Forest
+* Support Vector Machine (SVM)
+* Naive Bayes
+* AdaBoost
+* XGBoost
+
+### Evaluation Scenarios:
+
+1. With Hemoglobin (High accuracy)
+2. Without Hemoglobin (Real-world robustness)
+
+---
+
+## 🏆 Final Model Selection
+
+AdaBoost was selected as the final deployed model due to:
+
+* Stable and consistent performance
+* Good probability calibration
+* Lower computational cost
+* Suitability for real-time prediction
+
+---
+
+## 📊 Performance Metrics
+
+* Accuracy
+* Precision
+* Recall
+* F1 Score
+* ROC-AUC
+
+---
+
+## 🔥 Key Features
+
+### ✅ Prediction System
+
+* Input CBC values
+* Real-time anemia detection
+
+### ✅ Risk Analysis
+
+* Probability-based risk score
+* Model confidence
+
+### ✅ Visualization
+
+* Gauge chart (risk %)
+* Feature comparison graphs
+
+### ✅ Model Comparison
+
+* Multi-model evaluation
+* With/without Hb analysis
+
+### ✅ Dataset Explorer
+
+* Data preview & statistics
+* Missing value detection
+* Feature distribution
+
+### ✅ Analytics Dashboard
+
+* ROC Curve
+* Confusion Matrix
+
+### ✅ PDF Report Generation
+
+* Patient details
+* Prediction results
+* Risk score & recommendations
+
+---
+
+## 🧪 Prediction Logic
+
+```python
+proba = model.predict_proba(input_data)[0]
+confidence = max(proba) * 100
+risk_score = proba[1] * 100
+```
+
+---
+
+## 📂 Project Structure
+
+```
+anemia-detection-ml/
+│
+├── anemia.py
+├── data_cleaning.py
+├── final_model_comparison.py
+├── train_all_models_with_hgb.py
+├── train_all_models_without_hgb.py
+│
+├── models/
+├── dataset/
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🚀 How to Run
+
+```bash
+pip install -r requirements.txt
+streamlit run anemia.py
+```
+
+---
+
+## 🧠 Advantages
+
+* Early anemia detection
+* Multi-parameter analysis
+* Fast and automated predictions
+* User-friendly interface
+
+---
+
+## ⚠️ Limitations
+
+* Depends on dataset quality
+* Not a replacement for clinical diagnosis
+* Requires accurate inputs
+
+---
+
+## 🚀 Future Scope
+
+* Healthcare system integration
+* Mobile application
+* Deep learning models
+* Personalized treatment suggestions
+
+---
+
+## 🏁 Conclusion
+
+This project demonstrates how supervised machine learning can enhance anemia detection using hematological data. It provides accurate predictions, risk analysis, and visual insights, making it a useful decision-support tool.
+
+---
+
+## 💬 Final Statement
+
+"This project integrates machine learning with hematological analysis to provide an intelligent, real-time anemia screening system."
+
+Ajay
+B.Tech IT (Final Year)
